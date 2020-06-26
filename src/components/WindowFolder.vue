@@ -131,7 +131,7 @@ export default {
         width: 6px;
         height: 6px;
         position: relative;
-        top: -5px;
+        top: -6px;
         left: 3px;
     }
 
@@ -149,6 +149,6 @@ export default {
         height: 7px;
         position: relative;
         left: 2px;
-        top: -5px;
+        top: -6px;
     }
 </style>
