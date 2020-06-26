@@ -6,15 +6,15 @@
                 class="control-btn btn-close" 
                 :class="{'btn-close-pressed': btnClosePressed}" 
                 @mousedown="btnClosePressed = true" 
-                @mouseup="btnClosePressed = false"
+                @mouseleave="btnClosePressed = false"
                 @click="isClosed = true"
               >
                   <img v-show="buttonsActive" id="btn-cross" src="../assets/cross.svg" alt="">
               </div>
-              <div class="control-btn btn-minimize" :class="{'btn-minimize-pressed': btnMinimizePressed}" @mousedown="btnMinimizePressed = true" @mouseup="btnMinimizePressed = false">
+              <div class="control-btn btn-minimize" :class="{'btn-minimize-pressed': btnMinimizePressed}" @mousedown="btnMinimizePressed = true" @mouseleave="btnMinimizePressed = false">
                   <div v-show="buttonsActive" id="btn-line"></div>
               </div>
-              <div class="control-btn btn-expand" :class="{'btn-expand-pressed': btnExpandPressed}" @mousedown="btnExpandPressed = true" @mouseup="btnExpandPressed = false">
+              <div class="control-btn btn-expand" :class="{'btn-expand-pressed': btnExpandPressed}" @mousedown="btnExpandPressed = true" @mouseleave="btnExpandPressed = false">
                   <img v-show="buttonsActive" id="btn-expand" src="../assets/expand.svg" alt="">
               </div>
           </div>
@@ -95,8 +95,8 @@ export default {
     }
 
     .control-btn {
-        height: 11px;
-        width: 11px;
+        height: 10px;
+        width: 10px;
         border-radius: 10px;
         margin-left: 7px;
         background-color: rgb(209, 209, 209);
