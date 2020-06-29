@@ -38,17 +38,18 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     #folder {
-      width: 70px ;
+      width: 70px;
+      height: 90px;
       position: absolute;
     }
     .outline {
-      height: 70px;
-      width: 70px;
+      height: 65px;
+      width: 68px;
       border: 2px solid darkgray;
       border-radius: 5px;
       background-color: black;
       opacity: 0;
-      position: relative;
+      position: absolute;
     }
 
     .activeFolder {
@@ -61,15 +62,13 @@ export default {
     }
     
     img {
-      position: relative;
-      top: -70px;
-      left: 5px;
+      position: absolute;
+      left: 4px;
     }
 
     .name {
       position: relative;
-      top: -65px;
-      width: 70px;
+      top: 72px;
       text-align: center;
       font-weight: bold;
       color: white;
