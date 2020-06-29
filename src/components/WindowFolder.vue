@@ -22,19 +22,19 @@
       <div id="main">
           <div id="sidebar"></div>
           <div id="content">
-              <Selection />
+              <!-- <Selection /> -->
           </div>
       </div>
   </div>
 </template>
 
 <script>
-import Selection from "./Selection";
+// import Selection from "./Selection";
 
-export default {
+export default { 
     name: "WindowFolder",
     components: {
-        Selection
+        // Selection
     },
     data() {
         return {
@@ -132,7 +132,7 @@ export default {
         height: 6px;
         position: relative;
         top: -6px;
-        left: 3px;
+        left: 2px;
     }
 
     #btn-line {
@@ -141,14 +141,14 @@ export default {
         background-color: black;
         position: relative;
         top: 5px;
-        left: 2px;
+        left: 1px;
     }
 
     #btn-expand {
         width: 7px;
-        height: 7px;
+        height: 6px;
         position: relative;
-        left: 2px;
+        left: 1px;
         top: -6px;
     }
 </style>
