@@ -1,10 +1,14 @@
 <template>
-  <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @click="deactivateFolders" @mousedown="createSelection">
+  <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @mousedown="comboHandler">
     <Draggable>
       <WindowFolder />
     </Draggable>
-    <Folder name="Games" folderName="Games" @mousedown.native="drag"/>
-    <Folder name="Projects" folderName="Projects" @mousedown.native="drag"/>
+    <Draggable>
+      <Folder name="Games" folderName="Games"/>
+    </Draggable>
+    <Draggable>
+      <Folder name="Projects" folderName="Projects"/>
+    </Draggable>
     <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
   </div>
 </template>
@@ -40,6 +44,10 @@ export default {
     setInterval(this.changeBackground, 30000);
   },
   methods: {
+    comboHandler(e) {
+      this.deactivateFolders(e);
+      this.createSelection(e);
+    },
     changeBackground() {
       let rndIndex = Math.floor(Math.random() * this.backgrounds.length);
       let newBackground = this.backgrounds[rndIndex];
@@ -50,6 +58,7 @@ export default {
       newImg.src = `${this.publicPath}${newBackground}.jpg`;
     },
     deactivateFolders(e) {
+      console.log("selection off");
       let target = e.target.id === 'desktop' ? 'desktop' : e.target.parentNode.getAttribute('name');
         let folders = this.$store.state.folders;
         for (let folder in folders) {
@@ -59,7 +68,6 @@ export default {
         }
     },
     createSelection(e) {
-      console.log(e.target);
         if (e.target.id !== 'desktop') return;
         this.selectionStartX = e.clientX;
         this.selectionStartY = e.clientY;
@@ -96,44 +104,6 @@ export default {
             }
             
         }
-    }, 
-    drag(event) {
-      let target = event.target.parentNode;
-      if (target.id == 'desktop') return;
-      let shiftX = event.clientX - target.getBoundingClientRect().left;
-      let shiftY = event.clientY - target.getBoundingClientRect().top;
-
-      target.style.position = 'absolute';
-      target.style.zIndex = 1000;
-      // document.body.append(target);
-
-      moveAt(event.pageX, event.pageY);
-
-      // moves the target at (pageX, pageY) coordinates
-      // taking initial shifts into account
-      function moveAt(pageX, pageY) {
-        target.style.left = pageX - shiftX + 'px';
-        target.style.top = pageY - shiftY + 'px';
-      }
-
-      function onMouseMove(event) {
-        moveAt(event.pageX, event.pageY);
-      }
-
-      // move the target on mousemove
-      this.$el.addEventListener('mousemove', onMouseMove);
-
-      // drop the target, remove unneeded handlers
-
-      target.ondragstart = function() {
-        return false;
-      };
-      
-      target.addEventListener('mouseup', (e) => {
-        this.$store.state.folders[target.getAttribute('name')].left = e.pageX - shiftX;
-        this.$store.state.folders[target.getAttribute('name')].top = e.pageY - shiftY;
-        this.$el.removeEventListener('mousemove', onMouseMove);
-      });
     }
   }
 }
