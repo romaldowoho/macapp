@@ -9,10 +9,8 @@ export default {
     name: "Draggable",
     methods: {
         drag(event) {
-          if (event.target.id !== 'top-bar') return;
+          if ((event.target.id !== 'top-bar' && event.target.parentNode.id !== 'folder') || event.target.id == 'desktop') return; // FIX THIS
           let target = event.target.parentNode;
-          console.log(target);
-          if (target.id == 'desktop') return;
           let shiftX = event.clientX - target.getBoundingClientRect().left;
           let shiftY = event.clientY - target.getBoundingClientRect().top;
 
@@ -41,9 +39,15 @@ export default {
             return false;
           };
           
-          target.addEventListener('mouseup', () => {
+          target.addEventListener('mouseup', (e) => {
+            // if the target was a folder add the final location to the store
+            if (target.id === 'folder') {
+              this.$store.state.folders[target.getAttribute('name')].left = e.pageX - shiftX;
+              this.$store.state.folders[target.getAttribute('name')].top = e.pageY - shiftY;
+            }
             this.$el.removeEventListener('mousemove', onMouseMove);
           });
+          // remove the listener if the mouse moves too fast
           target.addEventListener('mouseleave', () => {
             this.$el.removeEventListener('mousemove', onMouseMove);
           });
