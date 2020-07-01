@@ -1,13 +1,13 @@
 <template>
   <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @mousedown="comboHandler">
     <Draggable>
-      <WindowFolder />
+      <WindowFolder folderName="games" />
     </Draggable>
     <Draggable>
-      <Folder name="Games" folderName="Games"/>
+      <Folder name="games" folderName="games"/>
     </Draggable>
     <Draggable>
-      <Folder name="Projects" folderName="Projects"/>
+      <Folder name="projects" folderName="projects"/>
     </Draggable>
     <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
   </div>

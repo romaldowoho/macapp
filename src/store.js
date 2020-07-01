@@ -5,16 +5,32 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
       folders: {
-          Games: {
+          games: {
               isActive: false,
               left: window.innerWidth - 100,
               top: 50
           },
-          Projects: {
+          projects: {
               isActive: false,
               left: window.innerWidth - 100,
               top: 150
           }
+      },
+      windows: {
+        folders: {
+            games: {
+                isOpen: true,
+                left: 300,
+                top: 200,
+                height: 400,
+                width: 700
+            },
+            projects: {
+                isOpen: false,
+                left: 0,
+                top: 0
+            }
+        }
       }
   }
 });

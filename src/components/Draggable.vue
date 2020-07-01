@@ -9,7 +9,7 @@ export default {
     name: "Draggable",
     methods: {
         drag(event) {
-          if ((event.target.id !== 'top-bar' && event.target.parentNode.id !== 'folder') || event.target.id == 'desktop') return; // FIX THIS
+          if (!event.target.classList.contains('draggable')) return;
           let target = event.target.parentNode;
           let shiftX = event.clientX - target.getBoundingClientRect().left;
           let shiftY = event.clientY - target.getBoundingClientRect().top;
@@ -25,7 +25,7 @@ export default {
             target.style.left = pageX - shiftX + 'px';
             target.style.top = pageY - shiftY + 'px';
           }
-
+ 
           function onMouseMove(event) {
             moveAt(event.pageX, event.pageY);
           }

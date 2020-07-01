@@ -1,8 +1,8 @@
 <template>
-  <div id="folder" @click="activate" :style="{left, top}">
-    <div class='outline' :class="{activeFolder: isActive}"></div>
-    <img src="../assets/folder.png" width="64px" height="64px" />
-    <div class="name" :class="{activeFolderName: isActive}">{{folderName}}</div>
+  <div id="folder" @click="activate" @dblclick="openFolder" :style="{left, top}">
+    <div class='outline draggable' :class="{activeFolder: isActive}"></div>
+    <img class='draggable' src="../assets/folder.png" width="64px" height="64px" />
+    <div class="name draggable" :class="{activeFolderName: isActive}">{{folderName}}</div>
   </div>
 </template>
 
@@ -19,6 +19,13 @@ export default {
   methods: {
     activate() {
       this.$store.state.folders[this.folderName].isActive = true;
+    },
+    openFolder() {
+      this.$store.state.windows.folders[this.folderName].isOpen = true;
+      this.$store.state.windows.folders[this.folderName].height = 400;
+      this.$store.state.windows.folders[this.folderName].width = 700;
+      this.$store.state.windows.folders[this.folderName].left = 300;
+      this.$store.state.windows.folders[this.folderName].top = 400;
     }
   },
   computed: {
@@ -41,6 +48,7 @@ export default {
       width: 70px;
       height: 90px;
       position: absolute;
+      z-index: 1000;
     }
     .outline {
       height: 65px;

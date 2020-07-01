@@ -1,13 +1,13 @@
 <template>
-  <div id="window" v-if="!isClosed">
-      <div id="top-bar">
-          <div id="control-buttons" @mouseover="buttonsActive = true" @mouseleave="buttonsActive = false">
+  <div id="window" :style="{left, top, height, width}">
+      <div id="top-bar" class='draggable'>
+          <div v-if="isOpen" id="control-buttons" @mouseover="buttonsActive = true" @mouseleave="buttonsActive = false">
               <div 
                 class="control-btn btn-close" 
                 :class="{'btn-close-pressed': btnClosePressed}" 
                 @mousedown="btnClosePressed = true" 
                 @mouseleave="btnClosePressed = false"
-                @click="isClosed = true"
+                @click="closeWindow"
               >
                   <img v-show="buttonsActive" id="btn-cross" src="../assets/cross.svg" alt="">
               </div>
@@ -17,6 +17,10 @@
               <div class="control-btn btn-expand" :class="{'btn-expand-pressed': btnExpandPressed}" @mousedown="btnExpandPressed = true" @mouseleave="btnExpandPressed = false">
                   <img v-show="buttonsActive" id="btn-expand" src="../assets/expand.svg" alt="">
               </div>
+          </div>
+          <div id="title" v-if="isOpen">
+              <img id="title-img" src="../assets/folder.png" alt="">
+              <span id="title-name">{{folderName}}</span>
           </div>
       </div>
       <div id="main">
@@ -33,16 +37,57 @@
 
 export default { 
     name: "WindowFolder",
+    props: {
+        folderName: String
+    },
     components: {
         // Selection
     },
     data() {
         return {
-            isClosed: false,
             buttonsActive: false,
             btnClosePressed: false,
             btnMinimizePressed: false,
             btnExpandPressed: false
+        }
+    },
+    methods: {
+        closeWindow() {
+            this.$store.state.windows.folders[this.folderName].isOpen = false;
+            this.$store.state.windows.folders[this.folderName].height = 0;
+            this.$store.state.windows.folders[this.folderName].width = 0;
+            this.$store.state.windows.folders[this.folderName].left = this.folderLeft + 30;
+            this.$store.state.windows.folders[this.folderName].top = this.folderTop + 30;
+            this.resetData();
+        },
+        resetData() {
+            this.buttonsActive = false;
+            this.btnClosePressed = false;
+            this.btnMinimizePressed = false;
+            this.btnExpandPressed = false;
+        }
+    },
+    computed: {
+        isOpen() {
+            return this.$store.state.windows.folders[this.folderName].isOpen;
+        },
+        left() {
+            return this.$store.state.windows.folders[this.folderName].left + 'px';
+        },
+        top() {
+            return this.$store.state.windows.folders[this.folderName].top + 'px';
+        },
+        height() {
+            return this.$store.state.windows.folders[this.folderName].height + 'px';
+        },
+        width() {
+            return this.$store.state.windows.folders[this.folderName].width + 'px';
+        },
+        folderLeft() {
+            return this.$store.state.folders[this.folderName].left;
+        },
+        folderTop() {
+            return this.$store.state.folders[this.folderName].top;
         }
     }
 }
@@ -51,12 +96,12 @@ export default {
 <style scoped>
     #window {
         position: absolute;
-        height: 400px;
-        width: 700px;
         background-color: rgba(255, 255, 255, 0);
         border-radius: 6px;
         border: 0.5px solid rgba(0, 0, 0, 0.315);
         box-shadow: 10px 15px 50px 10px rgba(0, 0, 0, 0.473);
+        transition: all 0.15s;
+        z-index: 0;
     }
 
     #top-bar {
@@ -64,6 +109,27 @@ export default {
         background: linear-gradient(rgb(238, 235, 238), rgb(207, 203, 207));
         border-radius: 6px 6px 0 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.288);
+    }
+
+    #title {
+        font-size: 13px;
+        vertical-align: middle;
+        display: inline-block;
+        position: relative;
+        left: 50%;
+        top: -10px;
+    }
+
+    #title-img {
+        margin: 0;
+        height: 16px;
+        width: 16px;
+    }
+
+    #title-name {
+        position: relative;
+        top: -3px;
+        left: 5px;
     }
 
     #main {

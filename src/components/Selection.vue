@@ -20,7 +20,6 @@ export default {
             } else {
                 return `${this.endY - this.startY}px`;
             }
-            
         },
         width() {
             if (this.endX && this.startX && this.endX < this.startX) {
@@ -28,7 +27,6 @@ export default {
             } else {
                 return `${this.endX - this.startX}px`;
             }
-            
         },
         left() {
             if (this.endX && this.startX && this.endX < this.startX) {
@@ -36,7 +34,6 @@ export default {
             } else {
                 return `${this.startX}px`;
             }
-            
         },
         top() {
             if (this.endY && this.startY && this.endY < this.startY) {
@@ -44,7 +41,6 @@ export default {
             } else {
                return `${this.startY}px`;
             }
-            
         }
     }
 }
