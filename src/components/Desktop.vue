@@ -1,5 +1,6 @@
 <template>
   <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @mousedown="comboHandler">
+    <Loading :desktopImageLoaded="desktopImageLoaded"/>
     <Draggable>
       <WindowFolder folderName="games" name="games" />
     </Draggable>
@@ -18,6 +19,8 @@ import Folder from './Folder.vue';
 import Selection from './Selection.vue'
 import WindowFolder from './WindowFolder.vue'
 import Draggable from './Draggable.vue'
+import Loading from './Loading.vue'
+
 
 export default {
     name: "Desktop",
@@ -25,7 +28,8 @@ export default {
         Folder,
         Selection,
         WindowFolder,
-        Draggable
+        Draggable,
+        Loading
     },
     data() {
     return {
@@ -36,7 +40,8 @@ export default {
       foldersInSelection: false,
       backgrounds: ["ElCapitan", "AntelopeCanyon", "AbstractShapes", "Lake", "ColorBurst1", "Yosemite", "Yosemite3"],
       currentBackground: "",
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
+      desktopImageLoaded: false
     }
   },
   mounted() {
@@ -53,7 +58,9 @@ export default {
       let newBackground = this.backgrounds[rndIndex];
       let newImg = new Image();
       newImg.onload = () => {
-        this.currentBackground = `${this.publicPath}${newBackground}.jpg`; 
+        this.currentBackground = `${this.publicPath}${newBackground}.jpg`;
+        setTimeout(() => {this.desktopImageLoaded = true;}, 6000);
+        
       }
       newImg.src = `${this.publicPath}${newBackground}.jpg`;
     },
