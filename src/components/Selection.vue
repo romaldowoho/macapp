@@ -15,18 +15,10 @@ export default {
     },
     computed: {
         height() {
-            if (this.endY && this.startY && this.endY < this.startY) {
-                return `${this.startY - this.endY}px`;
-            } else {
-                return `${this.endY - this.startY}px`;
-            }
+            return this.endY && this.startY ? `${Math.abs(this.startY - this.endY)}px` : 0;
         },
         width() {
-            if (this.endX && this.startX && this.endX < this.startX) {
-                return `${this.startX - this.endX}px`;
-            } else {
-                return `${this.endX - this.startX}px`;
-            }
+             return this.endX  && this.startX ? `${Math.abs(this.startX - this.endX)}px` : 0;
         },
         left() {
             if (this.endX && this.startX && this.endX < this.startX) {

@@ -1,7 +1,7 @@
 <template>
   <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @mousedown="comboHandler">
     <Draggable>
-      <WindowFolder folderName="games" />
+      <WindowFolder folderName="games" name="games" />
     </Draggable>
     <Draggable>
       <Folder name="games" folderName="games"/>
@@ -58,7 +58,6 @@ export default {
       newImg.src = `${this.publicPath}${newBackground}.jpg`;
     },
     deactivateFolders(e) {
-      console.log("selection off");
       let target = e.target.id === 'desktop' ? 'desktop' : e.target.parentNode.getAttribute('name');
         let folders = this.$store.state.folders;
         for (let folder in folders) {
@@ -71,6 +70,7 @@ export default {
         if (e.target.id !== 'desktop') return;
         this.selectionStartX = e.clientX;
         this.selectionStartY = e.clientY;
+        let self = this;
 
         this.$el.addEventListener('mousemove', onMouseMove);
         this.$el.addEventListener('mouseup', () => {
@@ -85,25 +85,31 @@ export default {
             selectionEndsAt(e.clientX, e.clientY);
         }
 
-        let self = this;
+        
         function selectionEndsAt(x, y) {
             self.selectionEndX = x;
             self.selectionEndY = y;
 
             let folders = self.$store.state.folders;
             for (let folder in folders) {
-              let x = folders[folder].left;
-              let y = folders[folder].top;
-              if (x <= self.selectionEndX && x >= self.selectionStartX && y >= self.selectionStartY && y <= self.selectionEndY) {
-                // self.foldersInSelection = true;
+              let fldrLeft = folders[folder].left;
+              let fldrTop = folders[folder].top;
+              if (self.folderInSelection(fldrTop, fldrLeft + 70, fldrTop + 90, fldrLeft, self.selectionStartY, x, y, self.selectionStartX)) {
                 folders[folder].isActive = true;
               } else {
-                // self.foldersInSelection = false;
                 folders[folder].isActive = false;
               }
             }
             
         }
+    },
+    folderInSelection(fldrTop, fldrRight, fldrBottom, fldrLeft, selTop, selRight, selBottom, selLeft) {
+      // create a standart box
+      let top = Math.min(selTop, selBottom);
+      let bottom = Math.max(selTop, selBottom);
+      let left = Math.min(selRight, selLeft);
+      let right = Math.max(selRight, selLeft); 
+      return !(right < fldrLeft || bottom < fldrTop || left > fldrRight || top > fldrBottom);
     }
   }
 }

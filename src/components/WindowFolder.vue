@@ -1,5 +1,5 @@
 <template>
-  <div id="window" :style="{left, top, height, width}">
+    <div id="window" :style="{left, top, height, width}" :class="{transition}">
       <div id="top-bar" class='draggable'>
           <div v-if="isOpen" id="control-buttons" @mouseover="buttonsActive = true" @mouseleave="buttonsActive = false">
               <div 
@@ -51,13 +51,21 @@ export default {
             btnExpandPressed: false
         }
     },
+    mounted() {
+        this.closeWindow();
+    },
     methods: {
         closeWindow() {
-            this.$store.state.windows.folders[this.folderName].isOpen = false;
-            this.$store.state.windows.folders[this.folderName].height = 0;
-            this.$store.state.windows.folders[this.folderName].width = 0;
-            this.$store.state.windows.folders[this.folderName].left = this.folderLeft + 30;
-            this.$store.state.windows.folders[this.folderName].top = this.folderTop + 30;
+            let window = this.$store.state.windows.folders[this.folderName];
+            window.transition = true; 
+            window.isOpen = false;
+            window.prevLeft = window.left;
+            window.prevTop = window.top;
+            window.height = 0;
+            window.width = 0;
+            window.left = this.folderLeft + 30;
+            window.top = this.folderTop + 30;
+            setTimeout(() => {window.transition = false;}, 50);
             this.resetData();
         },
         resetData() {
@@ -70,6 +78,9 @@ export default {
     computed: {
         isOpen() {
             return this.$store.state.windows.folders[this.folderName].isOpen;
+        },
+        transition() {
+            return this.$store.state.windows.folders[this.folderName].transition;
         },
         left() {
             return this.$store.state.windows.folders[this.folderName].left + 'px';
@@ -100,8 +111,11 @@ export default {
         border-radius: 6px;
         border: 0.5px solid rgba(0, 0, 0, 0.315);
         box-shadow: 10px 15px 50px 10px rgba(0, 0, 0, 0.473);
-        transition: all 0.15s;
         z-index: 0;
+    }
+
+    .transition {
+        transition: all 0.2s;
     }
 
     #top-bar {

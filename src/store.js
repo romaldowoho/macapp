@@ -22,8 +22,11 @@ export default new Vuex.Store({
                 isOpen: true,
                 left: 300,
                 top: 200,
+                prevLeft: 300, 
+                prevTop: 200, 
                 height: 400,
-                width: 700
+                width: 700,
+                transition: false
             },
             projects: {
                 isOpen: false,

@@ -21,11 +21,15 @@ export default {
       this.$store.state.folders[this.folderName].isActive = true;
     },
     openFolder() {
-      this.$store.state.windows.folders[this.folderName].isOpen = true;
-      this.$store.state.windows.folders[this.folderName].height = 400;
-      this.$store.state.windows.folders[this.folderName].width = 700;
-      this.$store.state.windows.folders[this.folderName].left = 300;
-      this.$store.state.windows.folders[this.folderName].top = 400;
+      let folder = this.$store.state.windows.folders[this.folderName];
+      folder.transition = true;
+      folder.isOpen = true;
+      folder.height = 400;
+      folder.width = 700;
+      folder.left = folder.prevLeft;
+      folder.top = folder.prevTop;
+      setTimeout(() => {folder.transition = false;}, 50);
+      
     }
   },
   computed: {

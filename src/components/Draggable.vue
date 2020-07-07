@@ -39,15 +39,21 @@ export default {
             return false;
           };
           
-          target.addEventListener('mouseup', (e) => {
+          let self = this;
+          function onMouseUp(e) {
             // if the target was a folder add the final location to the store
             if (target.id === 'folder') {
-              this.$store.state.folders[target.getAttribute('name')].left = e.pageX - shiftX;
-              this.$store.state.folders[target.getAttribute('name')].top = e.pageY - shiftY;
+              self.$store.state.folders[target.getAttribute('name')].left = e.pageX - shiftX;
+              self.$store.state.folders[target.getAttribute('name')].top = e.pageY - shiftY;
             }
-            this.$el.removeEventListener('mousemove', onMouseMove);
-          });
-          // remove the listener if the mouse moves too fast
+            if(target.id === 'window') {
+              self.$store.state.windows.folders[target.getAttribute('name')].left = e.pageX - shiftX;
+              self.$store.state.windows.folders[target.getAttribute('name')].top = e.pageY - shiftY;
+            }
+            target.removeEventListener('mouseup', onMouseUp);
+            self.$el.removeEventListener('mousemove', onMouseMove);
+          }
+          target.addEventListener('mouseup', onMouseUp);
           target.addEventListener('mouseleave', () => {
             this.$el.removeEventListener('mousemove', onMouseMove);
           });
