@@ -18,11 +18,18 @@ export default {
 
 <style>
     #app {
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      width: 100vw;
+      height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       -webkit-user-select: none;
       user-select: none;
     }
+
+    ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
 </style>

@@ -43,5 +43,6 @@ export default {
         position: relative;
         background-color: rgba(245, 245, 245, 0.233);
         border: 1px solid rgba(255, 255, 255, 0.452);
+        z-index: 1;
     }
 </style>

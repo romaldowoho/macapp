@@ -1,16 +1,12 @@
 <template>
-  <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @mousedown="comboHandler">
+  <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`, height: windowHeight, width: windowWidth}" @mousedown="comboHandler">
     <Loading :desktopImageLoaded="desktopImageLoaded"/>
-    <Draggable>
       <WindowFolder folderName="games" name="games" />
-    </Draggable>
-    <Draggable>
       <Folder name="games" folderName="games"/>
-    </Draggable>
-    <Draggable>
       <Folder name="projects" folderName="projects"/>
-    </Draggable>
-    <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
+      <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
+      <File icon="github.png" />
+      <button @click="goFullScreen">Fullscreen</button>
   </div>
 </template>
 
@@ -18,8 +14,10 @@
 import Folder from './Folder.vue';
 import Selection from './Selection.vue'
 import WindowFolder from './WindowFolder.vue'
-import Draggable from './Draggable.vue'
 import Loading from './Loading.vue'
+import File from './File.vue'
+import Draggable from 'draggable'
+
 
 
 export default {
@@ -28,27 +26,90 @@ export default {
         Folder,
         Selection,
         WindowFolder,
-        Draggable,
-        Loading
+        Loading,
+        File
     },
     data() {
-    return {
-      selectionStartX: 0,
-      selectionStartY: 0,
-      selectionEndX: 0,
-      selectionEndY: 0,
-      foldersInSelection: false,
-      backgrounds: ["ElCapitan", "AntelopeCanyon", "AbstractShapes", "Lake", "ColorBurst1", "Yosemite", "Yosemite3"],
-      currentBackground: "",
-      publicPath: process.env.BASE_URL,
-      desktopImageLoaded: false
-    }
+      return {
+        selectionStartX: 0,
+        selectionStartY: 0,
+        selectionEndX: 0,
+        selectionEndY: 0,
+        foldersInSelection: false,
+        backgrounds: ["ElCapitan", "AntelopeCanyon", "AbstractShapes", "Lake", "ColorBurst1", "Yosemite", "Yosemite3"],
+        currentBackground: "",
+        publicPath: process.env.BASE_URL,
+        desktopImageLoaded: false,
+        windowHeight: window.screen.height + 'px',
+        windowWidth: window.screen.width + 'px',
+        isFullscreen: false
+      }
   },
   mounted() {
     this.changeBackground();
     setInterval(this.changeBackground, 30000);
+    const folders = document.querySelectorAll("#folder");
+    folders.forEach(folder => {
+      new Draggable(folder, {onDragEnd: this.updateFolderLocation, limit: this.$el});
+    });
   },
   methods: {
+    log() {
+      console.log("done");
+    },
+    goFullScreen(){
+      var elem = document.documentElement;
+      console.log(elem);
+      if (
+        document.fullscreenEnabled || 
+        document.webkitFullscreenEnabled || 
+        document.mozFullScreenEnabled ||
+        document.msFullscreenEnabled
+      ) {
+        if(!this.isFullscreen){
+          if (elem.requestFullscreen) {
+            console.log(elem.requestFullscreen);
+            elem.requestFullscreen().then(() => {console.log("done")}).catch(err => {console.log(err)});
+            this.isFullscreen = true;
+            return;
+          } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+            this.isFullscreen = true;
+            return;
+          } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+            this.isFullscreen = true;
+            return;
+          } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+            this.isFullscreen = true;
+            return;
+          }
+        }else{
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+            this.isFullscreen = false;
+            return;
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+            this.isFullscreen = false;
+            return;
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+            this.isFullscreen = false;
+            return;
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+            this.isFullscreen = false;
+            return;
+          }
+        }
+      }
+    },
+    updateFolderLocation(folder, x, y) {
+      this.$store.state.folders[folder.getAttribute('name')].left  = x;
+      this.$store.state.folders[folder.getAttribute('name')].top  = y;
+    },
     comboHandler(e) {
       this.deactivateFolders(e);
       this.createSelection(e);
@@ -60,7 +121,6 @@ export default {
       newImg.onload = () => {
         this.currentBackground = `${this.publicPath}${newBackground}.jpg`;
         setTimeout(() => {this.desktopImageLoaded = true;}, 6000);
-        
       }
       newImg.src = `${this.publicPath}${newBackground}.jpg`;
     },
@@ -124,10 +184,8 @@ export default {
 
 <style scoped>
     #desktop {
-        background-size: cover;
-        height: 100vh;
-        width: 100vw;
         transition: background-image 4s;
+        background-size: cover;
     }
 
 

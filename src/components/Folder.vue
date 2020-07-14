@@ -1,20 +1,20 @@
 <template>
   <div id="folder" @click="activate" @dblclick="openFolder" :style="{left, top}">
-    <div class='outline draggable' :class="{activeFolder: isActive}"></div>
-    <img class='draggable' src="../assets/folder.png" width="64px" height="64px" />
-    <div class="name draggable" :class="{activeFolderName: isActive}">{{folderName}}</div>
+    <div class='outline' :class="{activeFolder: isActive}"></div>
+    <img  src="../assets/folder.png" width="64px" height="64px" />
+    <div class="name" :class="{activeFolderName: isActive}">{{folderName}}</div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'Folder',
   props: {
     folderName: String
   },
   data() {
-    return {
-    }
+    return {}
   },
   methods: {
     activate() {
@@ -29,7 +29,6 @@ export default {
       folder.left = folder.prevLeft;
       folder.top = folder.prevTop;
       setTimeout(() => {folder.transition = false;}, 50);
-      
     }
   },
   computed: {
@@ -52,7 +51,7 @@ export default {
       width: 70px;
       height: 90px;
       position: absolute;
-      z-index: 1000;
+      z-index: 0;
     }
     .outline {
       height: 65px;

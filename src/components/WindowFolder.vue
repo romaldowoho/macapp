@@ -1,6 +1,6 @@
 <template>
     <div id="window" :style="{left, top, height, width}" :class="{transition}">
-      <div id="top-bar" class='draggable'>
+      <div id="top-bar">
           <div v-if="isOpen" id="control-buttons" @mouseover="buttonsActive = true" @mouseleave="buttonsActive = false">
               <div 
                 class="control-btn btn-close" 
@@ -67,6 +67,7 @@ export default {
             window.top = this.folderTop + 30;
             setTimeout(() => {window.transition = false;}, 50);
             this.resetData();
+            this.$el.style.zIndex = 0;
         },
         resetData() {
             this.buttonsActive = false;
@@ -111,7 +112,7 @@ export default {
         border-radius: 6px;
         border: 0.5px solid rgba(0, 0, 0, 0.315);
         box-shadow: 10px 15px 50px 10px rgba(0, 0, 0, 0.473);
-        z-index: 0;
+        z-index: 5;
     }
 
     .transition {

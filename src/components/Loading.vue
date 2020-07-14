@@ -1,6 +1,6 @@
 <template>
   <transition name="loaded">
-    <div id="main" v-if="!desktopImageLoaded">
+    <div id="main" v-if="!desktopImageLoaded" :style="{width, height}">
     <img src="../assets/apple.png" alt="">
     <div id="load-parent">
       <div id="loading"></div>
@@ -15,17 +15,21 @@ export default {
   name: "Loading",
   props: {
     desktopImageLoaded: Boolean
+  },
+  data() {
+    return {
+      width: window.screen.width + 'px',
+      height: window.screen.height + 'px'
+    }
   }
 }
 </script>
 
 <style scoped>
     #main {
-        width: 100%;
-        height: 100%;
         position: absolute;
-        background-color: rgb(8, 8, 8);
-        z-index: 2000;
+        background-color: black;
+        z-index: 9999;
     }
 
     img {
@@ -33,27 +37,27 @@ export default {
       height: 150;
       display: block;
       position: relative;
-      top: 300px;
+      top: 400px;
       margin: 0 auto;
     }
 
     #load-parent {
-      width: 250px;
-      height: 8px;
-      background-color:rgb(189, 184, 184);
+      width: 300px;
+      height: 5px;
+      background-color:rgb(90, 86, 86);
       border: 1px solid white;
       border-radius: 8px;
       display: block;
       position: relative;
-      top: 400px;
+      top: 500px;
       margin: 0 auto;
     }
 
     #loading {
       width: 0px;
-      height: 8px;
+      height: 5px;
       background-color: white;
-      border-radius: 8px;
+      border-radius: 8px 0px 0px 8px ;
       animation: loading 6s forwards;
     }
 
@@ -89,7 +93,7 @@ export default {
         width: 200px;
       }
       100% {
-        width: 250px;
+        width: 300px;
       }
     }
 
