@@ -1,12 +1,12 @@
 <template>
-  <div id="icon" class="draggable" @dblclick="open">
-      <img id="img" class="draggable" :src="require(`@/assets/${icon}`)" width="49" height="49" alt="github">
+  <div id="icon" @dblclick="open">
+      <img id="img" :src="require(`@/assets/${icon}`)" width="49" height="49" alt="github">
   </div>
 </template>
 
 <script>
 export default {
-    name: "File",
+    name: "Item",
     props: {
         icon: String,
         fileName: String
@@ -25,6 +25,7 @@ export default {
         width: 47px;
         background-color: whitesmoke;
         border-radius: 50%;
+        position: absolute;
     }
 
     #img {

@@ -5,18 +5,19 @@
       <Folder name="games" folderName="games"/>
       <Folder name="projects" folderName="projects"/>
       <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
-      <File icon="github.png" />
-      <button @click="goFullScreen">Fullscreen</button>
+      <Item icon="github.png" />
+      <Alert />
   </div>
 </template>
 
 <script>
-import Folder from './Folder.vue';
+import Folder from './Folder.vue'
 import Selection from './Selection.vue'
 import WindowFolder from './WindowFolder.vue'
 import Loading from './Loading.vue'
-import File from './File.vue'
+import Item from './Item.vue'
 import Draggable from 'draggable'
+import Alert from './Alert'
 
 
 
@@ -27,7 +28,8 @@ export default {
         Selection,
         WindowFolder,
         Loading,
-        File
+        Item,
+        Alert
     },
     data() {
       return {
@@ -42,7 +44,6 @@ export default {
         desktopImageLoaded: false,
         windowHeight: window.screen.height + 'px',
         windowWidth: window.screen.width + 'px',
-        isFullscreen: false
       }
   },
   mounted() {
@@ -57,55 +58,7 @@ export default {
     log() {
       console.log("done");
     },
-    goFullScreen(){
-      var elem = document.documentElement;
-      console.log(elem);
-      if (
-        document.fullscreenEnabled || 
-        document.webkitFullscreenEnabled || 
-        document.mozFullScreenEnabled ||
-        document.msFullscreenEnabled
-      ) {
-        if(!this.isFullscreen){
-          if (elem.requestFullscreen) {
-            console.log(elem.requestFullscreen);
-            elem.requestFullscreen().then(() => {console.log("done")}).catch(err => {console.log(err)});
-            this.isFullscreen = true;
-            return;
-          } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-            this.isFullscreen = true;
-            return;
-          } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-            this.isFullscreen = true;
-            return;
-          } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
-            this.isFullscreen = true;
-            return;
-          }
-        }else{
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-            this.isFullscreen = false;
-            return;
-          } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-            this.isFullscreen = false;
-            return;
-          } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-            this.isFullscreen = false;
-            return;
-          } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-            this.isFullscreen = false;
-            return;
-          }
-        }
-      }
-    },
+    
     updateFolderLocation(folder, x, y) {
       this.$store.state.folders[folder.getAttribute('name')].left  = x;
       this.$store.state.folders[folder.getAttribute('name')].top  = y;
@@ -186,6 +139,7 @@ export default {
     #desktop {
         transition: background-image 4s;
         background-size: cover;
+        overflow: hidden;
     }
 
 
