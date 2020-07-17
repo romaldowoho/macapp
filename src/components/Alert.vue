@@ -78,16 +78,17 @@ export default {
 
 <style scoped>
     #alert {
-        width: 325px;
+        width: 335px;
         height: 64px;
         position: relative;
         float: right;
-        left: 350px;
+        left: 360px;
         top: 50px;
         z-index: 100;
         display: flex;
         border-radius: 8px;
         background: linear-gradient(rgb(203, 219, 218), rgb(236, 236, 236));
+        color: rgb(40, 40, 40);
         box-shadow: 10px 15px 50px 10px rgba(0, 0, 0, 0.473);
         animation: slide-left 0.5s forwards ease-out;
         animation-delay: 10s;
@@ -129,9 +130,9 @@ export default {
     }
 
     #top, #bottom {
-        width: 75px;
+        width: 85px;
         height: 32px;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 500;
         text-align: center;
         vertical-align: center;
