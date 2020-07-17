@@ -82,7 +82,7 @@ export default {
         height: 64px;
         position: relative;
         float: right;
-        left: 325px;
+        left: 350px;
         top: 50px;
         z-index: 100;
         display: flex;

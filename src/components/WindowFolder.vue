@@ -67,7 +67,7 @@ export default {
             window.top = this.folderTop + 30;
             setTimeout(() => {window.transition = false;}, 50);
             this.resetData();
-            this.$el.style.zIndex = 0;
+            // this.$el.style.zIndex = 0;
         },
         resetData() {
             this.buttonsActive = false;

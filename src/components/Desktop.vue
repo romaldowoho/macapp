@@ -1,11 +1,12 @@
 <template>
-  <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`, height: windowHeight, width: windowWidth}" @mousedown="comboHandler">
+  <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @mousedown="comboHandler">
+    <Menubar />
     <Loading :desktopImageLoaded="desktopImageLoaded"/>
       <WindowFolder folderName="games" name="games" />
       <Folder name="games" folderName="games"/>
       <Folder name="projects" folderName="projects"/>
       <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
-      <Item icon="github.png" />
+      <!-- <Item icon="github.png" /> -->
       <Alert />
   </div>
 </template>
@@ -15,9 +16,10 @@ import Folder from './Folder.vue'
 import Selection from './Selection.vue'
 import WindowFolder from './WindowFolder.vue'
 import Loading from './Loading.vue'
-import Item from './Item.vue'
+// import Item from './Item.vue'
 import Draggable from 'draggable'
 import Alert from './Alert'
+import Menubar from './Menubar'
 
 
 
@@ -28,8 +30,9 @@ export default {
         Selection,
         WindowFolder,
         Loading,
-        Item,
-        Alert
+        // Item,
+        Alert,
+        Menubar
     },
     data() {
       return {
@@ -42,16 +45,24 @@ export default {
         currentBackground: "",
         publicPath: process.env.BASE_URL,
         desktopImageLoaded: false,
-        windowHeight: window.screen.height + 'px',
+        windowHeight: window.innerHeight + 'px',
         windowWidth: window.screen.width + 'px',
       }
   },
   mounted() {
     this.changeBackground();
     setInterval(this.changeBackground, 30000);
+
     const folders = document.querySelectorAll("#folder");
     folders.forEach(folder => {
-      new Draggable(folder, {onDragEnd: this.updateFolderLocation, limit: this.$el});
+      new Draggable(folder, {onDragEnd: this.updateItemLocation, limit: this.$el});
+    });
+
+    const windows = document.querySelectorAll("#window");
+    windows.forEach(window => {
+      new Draggable(window, {onDragEnd: this.updateItemLocation, 
+                             handle: document.querySelector('#top-bar'),
+                             limit: {y: [20, this.windowHeight], x: null}});
     });
   },
   methods: {
@@ -59,9 +70,15 @@ export default {
       console.log("done");
     },
     
-    updateFolderLocation(folder, x, y) {
-      this.$store.state.folders[folder.getAttribute('name')].left  = x;
-      this.$store.state.folders[folder.getAttribute('name')].top  = y;
+    updateItemLocation(item, newX, newY) {
+      if (item.id == 'folder') {
+        this.$store.state.folders[item.getAttribute('name')].left  = newX;
+        this.$store.state.folders[item.getAttribute('name')].top  = newY;
+      } else if (item.id == 'window') {
+        this.$store.state.windows.folders[item.getAttribute('name')].left  = newX;
+        this.$store.state.windows.folders[item.getAttribute('name')].top  = newY;
+      }
+      
     },
     comboHandler(e) {
       this.deactivateFolders(e);
@@ -137,6 +154,10 @@ export default {
 
 <style scoped>
     #desktop {
+        height: 100vh;
+        width: 100vw;
+        min-height: 720px;
+        min-width: 1280px;
         transition: background-image 4s;
         background-size: cover;
         overflow: hidden;

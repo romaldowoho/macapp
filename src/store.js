@@ -7,13 +7,18 @@ export default new Vuex.Store({
       folders: {
           games: {
               isActive: false,
-              left: window.screen.width - 100,
+              left: window.innerWidth - 100,
               top: 50
           },
           projects: {
               isActive: false,
-              left: window.screen.width - 100,
+              left: window.innerWidth - 100,
               top: 150
+          }
+      },
+      items: {
+          github: {
+
           }
       },
       windows: {

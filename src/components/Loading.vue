@@ -1,6 +1,6 @@
 <template>
   <transition name="loaded">
-    <div id="main" v-if="!desktopImageLoaded" :style="{width, height}">
+    <div id="main" v-if="!desktopImageLoaded">
     <img src="../assets/apple.png" alt="">
     <div id="load-parent">
       <div id="loading"></div>
@@ -18,8 +18,8 @@ export default {
   },
   data() {
     return {
-      width: window.screen.width + 'px',
-      height: window.screen.height + 'px'
+      width: window.innerWidth + 'px',
+      height: window.innerHeight + 'px'
     }
   }
 }
@@ -29,6 +29,8 @@ export default {
     #main {
         position: absolute;
         background-color: black;
+        width: 100%;
+        height: 100%;
         z-index: 9999;
     }
 
