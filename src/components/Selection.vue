@@ -1,7 +1,5 @@
 <template>
-  <div class="selection" :style="{width, height, left, top}">
-
-  </div>
+  <div v-if="isVisible" class="selection" :style="{width, height, left, top}"></div>
 </template>
 
 <script>
@@ -14,6 +12,9 @@ export default {
         endY: Number
     },
     computed: {
+        isVisible() {
+            return this.height && this.width;
+        },
         height() {
             return this.endY && this.startY ? `${Math.abs(this.startY - this.endY)}px` : 0;
         },
@@ -40,7 +41,7 @@ export default {
 
 <style scoped>
     .selection {
-        position: relative;
+        position: absolute;
         background-color: rgba(245, 245, 245, 0.233);
         border: 1px solid rgba(255, 255, 255, 0.452);
         z-index: 1;
