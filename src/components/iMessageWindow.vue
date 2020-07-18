@@ -22,6 +22,7 @@
           <div id="message-field">
               <form method="POST" name="imessage" data-netlify="true">
                   <input type="text" label="Message" name="message" placeholder="iMessage">
+                  <input type="hidden" name="form-name" value="imessage">
               </form>
           </div>
       </div>
