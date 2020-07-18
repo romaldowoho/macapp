@@ -20,7 +20,7 @@
               <div id="to">To: Ramazan</div>
           </div>
           <div id="message-field">
-              <form method="POST" name="imessage" data-netlify="true">
+              <form method="POST" name="imessage" netlify netlify-honeypot="bot-field" >
                   <input type="text" label="Message" name="message" placeholder="iMessage">
                   <input type="hidden" name="form-name" value="imessage">
               </form>
