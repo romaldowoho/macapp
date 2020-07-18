@@ -21,7 +21,7 @@
           </div>
           <div id="message-field">
               <form method="POST" name="imessage" data-netlify="true" data-netlify-honeypot="bot-field">
-                  <input type="text" name="message" placeholder="iMessage">
+                  <input type="text" label="Message" name="message" placeholder="iMessage">
               </form>
           </div>
       </div>
