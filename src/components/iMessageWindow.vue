@@ -21,7 +21,7 @@
           </div>
           <div id="message-field">
               <form method="POST" name="imessage" netlify netlify-honeypot="bot-field" @submit="handleFormSubmit">
-                  <input type="text" label="Message" name="message" placeholder="iMessage">
+                  <input v-model="currentMessage" type="text" label="Message" name="message" placeholder="iMessage">
                   <input type="hidden" name="form-name" value="imessage">
               </form>
           </div>
@@ -34,7 +34,8 @@ export default {
     name: "iMessage",
     data() {
         return {
-            lastMessage: "Hello",
+            currentMessage: "",
+            lastMessage: "",
             lastMessageTime: "4:17 PM"
         }
     },
@@ -52,8 +53,11 @@ export default {
             })
             .then(res => {
                 if (res) {
-                    alert('worked');
+                    this.lastMessage = this.currentMessage;
+                    this.currentMessage = "";
                 }
+            }).catch(err => {
+                console.log(err);
             });
         }
     }
