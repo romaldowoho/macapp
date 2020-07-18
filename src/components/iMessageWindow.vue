@@ -41,7 +41,20 @@ export default {
     methods: {
         handleFormSubmit(e) {
             e.preventDefault();
-            console.log(e);
+            const formData = new FormData(e.target);
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(res => {
+                if (res) {
+                    alert('worked');
+                }
+            });
         }
     }
 }
