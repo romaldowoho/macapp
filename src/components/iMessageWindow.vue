@@ -20,7 +20,7 @@
               <div id="to">To: Ramazan</div>
           </div>
           <div id="message-field">
-              <form method="POST" name="imessage" netlify netlify-honeypot="bot-field" >
+              <form method="POST" name="imessage" netlify netlify-honeypot="bot-field" @submit="handleFormSubmit">
                   <input type="text" label="Message" name="message" placeholder="iMessage">
                   <input type="hidden" name="form-name" value="imessage">
               </form>
@@ -36,6 +36,12 @@ export default {
         return {
             lastMessage: "Hello",
             lastMessageTime: "4:17 PM"
+        }
+    },
+    methods: {
+        handleFormSubmit(e) {
+            e.preventDefault();
+            console.log(e);
         }
     }
 }
