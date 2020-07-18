@@ -2,12 +2,13 @@
   <div id="desktop" :style="{backgroundImage: `url(${currentBackground})`}" @mousedown="comboHandler">
     <Menubar />
     <Loading :desktopImageLoaded="desktopImageLoaded"/>
-      <WindowFolder folderName="games" name="games" />
-      <Folder name="games" folderName="games"/>
-      <Folder name="projects" folderName="projects"/>
-      <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
-      <!-- <Item icon="github.png" /> -->
-      <Alert />
+    <WindowFolder folderName="games" name="games" />
+    <Folder name="games" folderName="games"/>
+    <Folder name="projects" folderName="projects"/>
+    <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
+    <!-- <Item icon="github.png" /> -->
+    <Alert />
+    <iMessage />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import Loading from './Loading.vue'
 import Draggable from 'draggable'
 import Alert from './Alert'
 import Menubar from './Menubar'
+import iMessage from './iMessageWindow'
 
 
 
@@ -32,7 +34,8 @@ export default {
         Loading,
         // Item,
         Alert,
-        Menubar
+        Menubar,
+        iMessage
     },
     data() {
       return {
@@ -64,6 +67,10 @@ export default {
                              handle: document.querySelector('#top-bar'),
                              limit: {y: [20, this.windowHeight], x: null}});
     });
+    const imessage = document.querySelector('#imessage');
+     new Draggable(imessage, { handle: document.querySelector('#imessage-handle'),
+                             limit: {y: [20, this.windowHeight], x: null},
+                             setPosition: false});
   },
   methods: {
     log() {

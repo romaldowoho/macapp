@@ -212,7 +212,7 @@ export default {
         width: 6px;
         height: 6px;
         position: relative;
-        top: -6px;
+        top: -8px;
         left: 2px;
     }
 
@@ -230,6 +230,6 @@ export default {
         height: 6px;
         position: relative;
         left: 1px;
-        top: -6px;
+        top: -8px;
     }
 </style>
