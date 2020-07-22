@@ -57,7 +57,7 @@ export default {
 
     #loading {
       width: 0px;
-      height: 4px;
+      height: 5px;
       background-color: white;
       border-radius: 7px 0px 0px 8px ;
       animation: loading 6s forwards;

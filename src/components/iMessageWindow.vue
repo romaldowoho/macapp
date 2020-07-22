@@ -164,7 +164,7 @@ export default {
 
     #msg-time {
         text-align: center;
-        color: rgb(180, 179, 185);
+        color: rgb(123, 122, 126);
         font-size: 11px;
         font-weight: 500;
     }
@@ -219,7 +219,7 @@ export default {
 
     #searchbar {
         width: 200px;
-        height: 22px;
+        height: 20px;
         position: absolute;
         top: 21px;
         left: 18px;
@@ -247,7 +247,7 @@ export default {
         position: absolute;
         left: 230px;
         top: 21px;
-        height: 22px;
+        height: 20px;
         width: 30px;
         z-index: 10;
         border: 1px solid rgba(128, 128, 128, 0.301);

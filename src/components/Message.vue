@@ -45,15 +45,11 @@ export default {
     }
 
     #message {
-        font-size: 14px;
+        font-size: 13px;
         display: inline-block;
         width: auto;
         max-width: 250px;
         padding: 3px 8px 5px 8px;
-        /* background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 100% 100%; */
         border-radius: 15px;
     }
 </style>
