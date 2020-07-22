@@ -203,7 +203,7 @@ export default {
         top: 8px;
         padding-left: 5px;
         border: 1px solid rgba(128, 128, 128, 0.548);
-        border-radius: 10px;
+        border-radius: 15px;
         font-size: 14px;
     }
 
