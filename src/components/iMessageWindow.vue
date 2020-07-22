@@ -61,7 +61,7 @@ export default {
             messages: [],
             currentMessage: "",
             lastMessage: "",
-            lastMessageTime: "4:17 PM",
+            lastMessageTime: "",
             greetingSent: false
         }
     },
@@ -72,6 +72,7 @@ export default {
                 text: greeting,
                 outgoing: false
             });
+            this.lastMessageTime = this.getTime();
             this.greetingSent = true;
             this.$refs['receive_sound'].play();
             this.lastMessage = greeting;
