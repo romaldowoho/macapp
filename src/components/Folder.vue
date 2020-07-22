@@ -1,7 +1,7 @@
 <template>
   <div id="folder" @click="activate" @dblclick="openFolder" :style="{left, top}">
     <div class='outline' :class="{activeFolder: isActive}"></div>
-    <img  src="../assets/folder.png" width="64px" height="64px" />
+    <img id="folder-icon"  src="../assets/folder.png" width="64px" height="64px" />
     <div class="name" :class="{activeFolderName: isActive}">{{folderName}}</div>
   </div>
 </template>
@@ -72,9 +72,10 @@ export default {
       border-radius: 3px;
     }
     
-    img {
+    #folder-icon {
       position: absolute;
-      left: 2px;
+      left: 4px;
+      top: 2px;
     }
 
     .name {

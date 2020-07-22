@@ -95,7 +95,7 @@ export default {
         width: 200px;
       }
       100% {
-        width: 298px;
+        width: 300px;
       }
     }
 

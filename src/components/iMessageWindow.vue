@@ -13,7 +13,10 @@
                       <img src="../assets/me.jpg" alt="">
                   </div>
                   <div id="msg-info">
-                      <h5>Ramazan</h5>
+                      <div id="name-time">
+                          <h5>Ramazan</h5>
+                          <span id="last-msg-time"> {{lastMessageTime}} </span>
+                      </div>
                       <p id="last-message">{{ lastMessage }}</p>
                   </div>
               </div>
@@ -290,6 +293,17 @@ export default {
 
     h5, p {
         margin: 0;
+    }
+
+    #name-time {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    #last-msg-time {
+        font-size: 12px;
+        padding-right: 10px;
     }
 
     #last-message {
