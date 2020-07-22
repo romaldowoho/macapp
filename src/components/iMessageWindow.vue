@@ -233,15 +233,16 @@ export default {
         transition: text-align 1s;
         background-image: url('../assets/search.png');
         background-repeat: no-repeat;
-        background-size: 7%;
-        background-position: 63px 6px;
+        background-size: 13px;
+        background-position: 62px 5px;
     }
 
     #searchbar:focus {
+        width: 178px;
         outline: none;
         text-align: left;
         padding-left: 24px;
-        background-position: 5px 6px;
+        background-position: 5px 5px;
     }
 
     #btn-compose {
