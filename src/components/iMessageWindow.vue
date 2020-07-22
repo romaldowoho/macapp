@@ -167,6 +167,7 @@ export default {
         color: rgb(123, 122, 126);
         font-size: 11px;
         font-weight: 500;
+        margin: 7px 0 7px 0;
     }
 
     #right-top {
