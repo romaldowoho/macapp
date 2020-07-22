@@ -74,7 +74,7 @@ export default {
     
     img {
       position: absolute;
-      left: 4px;
+      left: 2px;
     }
 
     .name {

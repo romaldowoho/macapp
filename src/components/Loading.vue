@@ -57,9 +57,9 @@ export default {
 
     #loading {
       width: 0px;
-      height: 5px;
+      height: 4px;
       background-color: white;
-      border-radius: 8px 0px 0px 8px ;
+      border-radius: 7px 0px 0px 8px ;
       animation: loading 6s forwards;
     }
 
@@ -95,7 +95,7 @@ export default {
         width: 200px;
       }
       100% {
-        width: 300px;
+        width: 298px;
       }
     }
 

@@ -1,8 +1,12 @@
 <template>
   <div id="imessage">
       <div id="imessage-handle"></div>
+      <ControlButtons />
+      <input type="text" id="searchbar" placeholder="Search" />
+      <button id="btn-compose"></button>
       <div id="left">
-          <div id="left-top" ></div>
+          <div id="left-top">
+          </div>
           <div id="left-bottom">
               <div id="recipient">
                   <div id="photo">
@@ -10,7 +14,7 @@
                   </div>
                   <div id="msg-info">
                       <h5>Ramazan</h5>
-                      <p>{{ lastMessage }}</p>
+                      <p id="last-message">{{ lastMessage }}</p>
                   </div>
               </div>
           </div>
@@ -19,9 +23,18 @@
           <div id="right-top">
               <div id="to">To: Ramazan</div>
           </div>
+          <div id="all-messages">
+              <div id="msg-time" v-if="greetingSent">
+                  Today, {{ getTime()}}
+              </div>
+              <Message v-for="msg in messages" :message="msg.text" :outgoing="msg.outgoing" :key="msg.key"/> 
+              <audio ref="send_sound" src="../assets/imessage_send.mp3"></audio>
+              <audio ref="receive_sound" src="../assets/imessage_receive.mp3"></audio>
+
+          </div>
           <div id="message-field">
               <form method="POST" name="imessage" netlify netlify-honeypot="bot-field" @submit="handleFormSubmit">
-                  <input v-model="currentMessage" type="text" label="Message" name="message" placeholder="iMessage">
+                  <input id="msg-input" v-model="currentMessage" type="text" label="Message" name="message" placeholder="iMessage" autocomplete="off" >
                   <input type="hidden" name="form-name" value="imessage">
               </form>
           </div>
@@ -30,35 +43,75 @@
 </template>
 
 <script>
+import Message from "./Message"
+import moment from 'moment';
+import ControlButtons from './ControlButtons'
+
 export default {
     name: "iMessage",
+    components: {
+        Message,
+        ControlButtons
+    },
     data() {
         return {
+            messages: [],
             currentMessage: "",
             lastMessage: "",
-            lastMessageTime: "4:17 PM"
+            lastMessageTime: "4:17 PM",
+            greetingSent: false
         }
     },
+    mounted() {
+        setTimeout(() => {
+            let greeting = "Hey there! You can send me a message here and I'll respond as soon as I can. Don't forget to mention your name and email! 🙂";
+            this.messages.push({
+                text: greeting,
+                outgoing: false
+            });
+            this.greetingSent = true;
+            this.$refs['receive_sound'].play();
+            this.lastMessage = greeting;
+        }, 9000);
+    },
     methods: {
+        getTime() {
+            return moment().format('LT');
+        },
         handleFormSubmit(e) {
             e.preventDefault();
-            const formData = new FormData(e.target);
-            fetch('/', {
-                method: 'POST',
-                headers: {
-                'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(res => {
-                if (res) {
-                    this.lastMessage = this.currentMessage;
-                    this.currentMessage = "";
-                }
-            }).catch(err => {
-                console.log(err);
+            this.messages.push({
+                text: this.currentMessage,
+                outgoing: true,
+                key: Math.random()
             });
+            this.$refs['send_sound'].play();
+            this.lastMessageTime = this.getTime();
+            this.lastMessage = this.currentMessage;
+            this.currentMessage = "";
+            let messages = document.querySelector("#all-messages");
+            messages.scrollTop = messages.scrollHeight;
+            // const formData = new FormData(e.target);
+            // fetch('/', {
+            //     method: 'POST',
+            //     headers: {
+            //     'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
+            //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            //     },
+            //     body: new URLSearchParams(formData).toString()
+            // })
+            // .then(res => {
+            //     if (res) {
+            //         this.lastMessage = this.currentMessage;
+            //         this.currentMessage = "";
+            //     }
+            // }).catch(err => {
+            //     console.log(err);
+            // });
+        },
+        sendForm() {
+            // let message = "";
+            // for (let msg of me)
         }
     }
 }
@@ -75,6 +128,7 @@ export default {
         border-radius: 6px;
         border: 1px solid rgba(128, 128, 128, 0.377);
         box-shadow: 10px 15px 50px 10px rgba(0, 0, 0, 0.473);
+        z-index: 100;
     }
 
     #imessage-handle {
@@ -102,6 +156,19 @@ export default {
         background-color: white;
     }
 
+    #all-messages {
+        width: 100%;
+        height: 311px;
+        overflow: scroll;
+    }
+
+    #msg-time {
+        text-align: center;
+        color: rgb(180, 179, 185);
+        font-size: 11px;
+        font-weight: 500;
+    }
+
     #right-top {
         width: 100%;
         height: 50px;
@@ -119,7 +186,7 @@ export default {
 
     #message-field {
         width: 100%;
-        height: 38px;
+        height: 40px;
         position: absolute;
         bottom: 0px;
         background-color: rgb(236, 236, 236);
@@ -127,9 +194,9 @@ export default {
         border-radius: 0 0 6px 0;
     }
 
-    input {
+    #msg-input {
         width: 90%;
-        height: 18px;
+        height: 22px;
         display: block;
         position: relative;
         margin: 0 auto;
@@ -137,9 +204,10 @@ export default {
         padding-left: 5px;
         border: 1px solid rgba(128, 128, 128, 0.548);
         border-radius: 10px;
+        font-size: 14px;
     }
 
-    input:focus {
+    #msg-input:focus {
         outline: none;
     }
 
@@ -149,8 +217,60 @@ export default {
         border-radius: 6px 0 0 0;
     }
 
+    #searchbar {
+        width: 200px;
+        height: 22px;
+        position: absolute;
+        top: 21px;
+        left: 18px;
+        text-align: center;
+        font-size: 13px;
+        background-color: rgba(128, 128, 128, 0.192);
+        z-index: 10;
+        border: 0px;
+        border-radius: 4px;
+        transition: text-align 1s;
+        background-image: url('../assets/search.png');
+        background-repeat: no-repeat;
+        background-size: 7%;
+        background-position: 63px 6px;
+    }
+
+    #searchbar:focus {
+        outline: none;
+        text-align: left;
+        padding-left: 24px;
+        background-position: 5px 6px;
+    }
+
+    #btn-compose {
+        position: absolute;
+        left: 230px;
+        top: 21px;
+        height: 22px;
+        width: 30px;
+        z-index: 10;
+        border: 1px solid rgba(128, 128, 128, 0.301);
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0px 1px rgba(128, 128, 128, 0.185);
+        background-image: url('../assets/compose.png');
+        background-repeat: no-repeat;
+        background-size: 15px;
+        background-position: center 1px;
+    }
+
+    #btn-compose:focus {
+        outline: none;
+        
+    }
+
+    #btn-compose:active {
+        background-color: rgba(128, 128, 128, 0.151);
+    }
+
     #left-bottom {
-        height: 375px;
+        height: 350px;
         widows: 100%;
     }
 
@@ -163,15 +283,19 @@ export default {
     }
 
     #msg-info {
-        padding-top: 8px;
+        padding-top: 6px;
     }
 
     h5, p {
         margin: 0;
     }
 
-    p {
-        font-size: 13px;
+    #last-message {
+        font-size: 12px;
+        width: 200px;
+        height: 33px;
+        line-height: 15px;
+        overflow: hidden;
     }
     
     #photo {
@@ -182,11 +306,11 @@ export default {
     img {
         height: 48px;
         width: 48px;
-        border-radius: 50%;
+        border-radius: 100%;
         object-fit: cover;
         display: block;
         margin-left: auto;
         margin-right: auto;
-        padding-top: 6px;
+        margin-top: 7px;
     }
 </style>
