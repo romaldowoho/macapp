@@ -1,7 +1,7 @@
 <template>
-  <div id="imessage">
+  <div id="imessage" v-show="isOpen">
       <div id="imessage-handle"></div>
-      <ControlButtons />
+      <ControlButtons :target="storeState()" />
       <input type="text" id="searchbar" placeholder="Search" />
       <button id="btn-compose"></button>
       <div id="left">
@@ -26,7 +26,7 @@
           <div id="right-top">
               <div id="to">To: Ramazan</div>
           </div>
-          <div id="all-messages">
+          <div ref="all_messages">
               <div id="msg-time" v-if="greetingSent">
                   Today, {{ getTime()}}
               </div>
@@ -36,7 +36,7 @@
 
           </div>
           <div id="message-field">
-              <form method="POST" name="imessage" netlify netlify-honeypot="bot-field" @submit="handleFormSubmit">
+              <form method="POST" name="imessage" netlify netlify-honeypot="bot-field" @submit="send">
                   <input id="msg-input" v-model="currentMessage" type="text" label="Message" name="message" placeholder="iMessage" autocomplete="off" >
                   <input type="hidden" name="form-name" value="imessage">
               </form>
@@ -79,10 +79,13 @@ export default {
         }, 9000);
     },
     methods: {
+        storeState() {
+            return this.$store.state.windows.imessage; 
+        },
         getTime() {
             return moment().format('LT');
         },
-        handleFormSubmit(e) {
+        send(e) {
             e.preventDefault();
             this.messages.push({
                 text: this.currentMessage,
@@ -93,29 +96,42 @@ export default {
             this.lastMessageTime = this.getTime();
             this.lastMessage = this.currentMessage;
             this.currentMessage = "";
-            let messages = document.querySelector("#all-messages");
+            let messages = this.$refs['all_messages'];
             messages.scrollTop = messages.scrollHeight;
             // const formData = new FormData(e.target);
-            // fetch('/', {
-            //     method: 'POST',
-            //     headers: {
-            //     'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
-            //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            //     },
-            //     body: new URLSearchParams(formData).toString()
-            // })
-            // .then(res => {
-            //     if (res) {
-            //         this.lastMessage = this.currentMessage;
-            //         this.currentMessage = "";
-            //     }
-            // }).catch(err => {
-            //     console.log(err);
-            // });
         },
         sendForm() {
-            // let message = "";
-            // for (let msg of me)
+            // eslint-disable-next-line no-unused-vars
+            let message = "";
+            for (let msg of this.messages) {
+                message += (msg.text + '\n')
+            }
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: new URLSearchParams(message).toString()
+            })
+            .then()
+            .catch(err => {
+                console.log(err);
+            });
+        }
+    },
+    computed: {
+        isOpen() {
+            return this.$store.state.windows.imessage.isOpen;
+        }
+    },
+    watch: {
+        // send the message if closing the window
+        isOpen(state) {
+            if(!state) {
+                this.sendForm();
+                this.messages = [];
+            }
         }
     }
 }

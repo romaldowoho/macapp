@@ -38,6 +38,15 @@ export default new Vuex.Store({
                 left: 0,
                 top: 0
             }
+        },
+        imessage: {
+            isOpen: true,
+            isMinimized: false,
+            isMaximized: false,
+            left: 300,
+            top: 200,
+            prevLeft: 300, 
+            prevTop: 200
         }
       }
   }

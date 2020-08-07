@@ -9,6 +9,7 @@
     <!-- <Item icon="github.png" /> -->
     <Alert />
     <iMessage />
+    <button @click="open">Imessage</button>
   </div>
 </template>
 
@@ -58,7 +59,7 @@ export default {
 
     const folders = document.querySelectorAll("#folder");
     folders.forEach(folder => {
-      new Draggable(folder, {onDragEnd: this.updateItemLocation, limit: this.$el});
+      new Draggable(folder, {onDragEnd: this.updateItemLocation, limit: {y: [20, this.windowHeight], x: null}});
     });
 
     const windows = document.querySelectorAll("#window");
@@ -76,7 +77,9 @@ export default {
     log() {
       console.log("done");
     },
-    
+    open() {
+      this.$store.state.windows.imessage.isOpen = true;    
+    },
     updateItemLocation(item, newX, newY) {
       if (item.id == 'folder') {
         this.$store.state.folders[item.getAttribute('name')].left  = newX;

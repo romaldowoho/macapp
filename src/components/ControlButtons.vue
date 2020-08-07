@@ -3,6 +3,7 @@
       <div 
         class="btn btn-close" 
         :class="{'btn-close-active': buttonsActive, 'btn-close-pressed': btnClosePressed}"
+        @click="close"
         @mousedown="btnClosePressed = true"
         @mouseup="btnClosePressed = false"
         @mouseout="btnClosePressed = false"
@@ -11,6 +12,7 @@
       <div 
         class="btn btn-minimize" 
         :class="{'btn-minimize-active': buttonsActive, 'btn-minimize-pressed': btnMinimizePressed}"
+        @click="minimize"
         @mousedown="btnMinimizePressed = true"
         @mouseup="btnMinimizePressed = false"
         @mouseout="btnMinimizePressed = false"
@@ -19,6 +21,7 @@
       <div 
         class="btn btn-expand" 
         :class="{'btn-expand-active': buttonsActive, 'btn-expand-pressed': btnExpandPressed}"
+        @click="maximize"
         @mousedown="btnExpandPressed = true"
         @mouseup="btnExpandPressed = false"
         @mouseout="btnExpandPressed = false"
@@ -31,6 +34,9 @@
 <script>
 export default {
     name: "ControlBtns",
+    props: {
+        target: Object
+    },
     data() {
         return {
             buttonsActive: false,
@@ -39,14 +45,18 @@ export default {
             btnExpandPressed: false
         }
     },
-    // watch: {
-    //     buttonsActive(val) {
-    //         console.log(val);
-    //     }
-    // },
     methods: {
         log() {
             console.log("hey");
+        },
+        close() {
+            this.target.isOpen = false;
+        },
+        minimize() {
+            this.target.isMinimized = true;
+        },
+        maximize() {
+            this.target.isMaximized = true;
         }
     }
 }
