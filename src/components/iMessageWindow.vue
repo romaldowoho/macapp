@@ -98,16 +98,8 @@ export default {
             this.currentMessage = "";
             let messages = this.$refs['all_messages'];
             messages.scrollTop = messages.scrollHeight;
-            
-        },
-        sendForm() {
-            // eslint-disable-next-line no-unused-vars
-            let message = "";
-            for (let msg of this.messages) {
-                message += (msg.text + '\n')
-            }
-            const formData = new FormData();
-            formData.append("msg", message);
+
+            const formData = new FormData(e.target);
             fetch('/', {
                 method: 'POST',
                 headers: {
@@ -116,10 +108,34 @@ export default {
                 },
                 body: new URLSearchParams(formData).toString()
             })
-            .then()
+            .then(res => {
+                console.log(res);
+            })
             .catch(err => {
                 console.log(err);
             });
+            
+        },
+        sendForm() {
+            // eslint-disable-next-line no-unused-vars
+            // let message = "";
+            // for (let msg of this.messages) {
+            //     message += (msg.text + '\n')
+            // }
+            // const formData = new FormData();
+            // formData.append("msg", message);
+            // fetch('/', {
+            //     method: 'POST',
+            //     headers: {
+            //     'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
+            //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            //     },
+            //     body: new URLSearchParams(formData).toString()
+            // })
+            // .then()
+            // .catch(err => {
+            //     console.log(err);
+            // });
         }
     },
     computed: {
@@ -129,12 +145,12 @@ export default {
     },
     watch: {
         // send the message if closing the window
-        isOpen(state) {
-            if(!state) {
-                this.sendForm();
-                this.messages = [];
-            }
-        }
+        // isOpen(state) {
+        //     if(!state) {
+        //         this.sendForm();
+        //         this.messages = [];
+        //     }
+        // }
     }
 }
 </script>
