@@ -98,7 +98,7 @@ export default {
             this.currentMessage = "";
             let messages = this.$refs['all_messages'];
             messages.scrollTop = messages.scrollHeight;
-            // const formData = new FormData(e.target);
+            
         },
         sendForm() {
             // eslint-disable-next-line no-unused-vars
@@ -106,13 +106,15 @@ export default {
             for (let msg of this.messages) {
                 message += (msg.text + '\n')
             }
+            const formData = new FormData();
+            formData.append("msg", message);
             fetch('/', {
                 method: 'POST',
                 headers: {
                 'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 },
-                body: new URLSearchParams(message).toString()
+                body: new URLSearchParams(formData).toString()
             })
             .then()
             .catch(err => {
