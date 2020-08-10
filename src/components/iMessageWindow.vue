@@ -77,7 +77,7 @@ export default {
             this.$refs['receive_sound'].play();
             this.lastMessage = greeting;
         }, 9000);
-
+        // submit form before closing the page
         window.addEventListener('beforeunload', this.sendForm);
     },
     methods: {
@@ -127,14 +127,6 @@ export default {
             return this.$store.state.windows.imessage.isOpen;
         }
     }
-    // watch: {
-    //     // send the message if closing the window
-    //     isOpen(state) {
-    //         if(!state) {
-    //             this.sendForm();
-    //         }
-    //     }
-    // }
 }
 </script>
 
