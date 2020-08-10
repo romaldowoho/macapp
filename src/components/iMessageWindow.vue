@@ -26,7 +26,7 @@
           <div id="right-top">
               <div id="to">To: Ramazan</div>
           </div>
-          <div ref="all_messages">
+          <div ref="all_messages" id="all-messages">
               <div id="msg-time" v-if="greetingSent">
                   Today, {{ getTime()}}
               </div>
@@ -77,6 +77,8 @@ export default {
             this.$refs['receive_sound'].play();
             this.lastMessage = greeting;
         }, 9000);
+
+        window.addEventListener('beforeunload', this.sendForm);
     },
     methods: {
         storeState() {
@@ -100,7 +102,8 @@ export default {
             messages.scrollTop = messages.scrollHeight;
         },
         sendForm() {
-            // eslint-disable-next-line no-unused-vars
+            if (this.messages.length <= 1) return;
+            this.messages.shift();
             let message = "";
             for (let msg of this.messages) {
                 message += (msg.text + '\n')
@@ -123,16 +126,15 @@ export default {
         isOpen() {
             return this.$store.state.windows.imessage.isOpen;
         }
-    },
-    watch: {
-        // send the message if closing the window
-        isOpen(state) {
-            if(!state) {
-                this.sendForm();
-                this.messages = [];
-            }
-        }
     }
+    // watch: {
+    //     // send the message if closing the window
+    //     isOpen(state) {
+    //         if(!state) {
+    //             this.sendForm();
+    //         }
+    //     }
+    // }
 }
 </script>
 
