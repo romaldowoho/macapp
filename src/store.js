@@ -40,7 +40,7 @@ export default new Vuex.Store({
             }
         },
         imessage: {
-            isOpen: true,
+            isOpen: false,
             isMinimized: false,
             isMaximized: false,
             left: 300,

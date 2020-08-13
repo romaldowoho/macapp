@@ -31,7 +31,7 @@ export default {
         background-color: black;
         width: 100%;
         height: 100%;
-        z-index: 9999;
+        z-index: 10003;
     }
 
     img {

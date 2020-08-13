@@ -9,7 +9,7 @@
     <!-- <Item icon="github.png" /> -->
     <Alert />
     <iMessage />
-    <button @click="open">Imessage</button>
+    <Dock id="dock" />
   </div>
 </template>
 
@@ -23,6 +23,7 @@ import Draggable from 'draggable'
 import Alert from './Alert'
 import Menubar from './Menubar'
 import iMessage from './iMessageWindow'
+import Dock from './Dock'
 
 
 
@@ -36,7 +37,8 @@ export default {
         // Item,
         Alert,
         Menubar,
-        iMessage
+        iMessage,
+        Dock
     },
     data() {
       return {
@@ -171,6 +173,15 @@ export default {
         transition: background-image 4s;
         background-size: cover;
         overflow: hidden;
+    }
+
+    #dock {
+      position: fixed;
+      bottom: 0px;
+      left: 50%;
+      margin-left: -400px;
+      /* 1 more than draggable */
+      z-index: 10001;
     }
 
 

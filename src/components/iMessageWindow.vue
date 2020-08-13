@@ -141,7 +141,7 @@ export default {
         border-radius: 6px;
         border: 1px solid rgba(128, 128, 128, 0.377);
         box-shadow: 10px 15px 50px 10px rgba(0, 0, 0, 0.473);
-        z-index: 100;
+        z-index: 5;
     }
 
     #imessage-handle {
