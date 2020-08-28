@@ -10,7 +10,7 @@
           <div id="left-bottom">
               <div id="recipient">
                   <div id="photo">
-                      <img src="../assets/me.jpg" alt="">
+                      <img src="../assets/me.webp" alt="">
                   </div>
                   <div id="msg-info">
                       <div id="name-time">
@@ -66,17 +66,6 @@ export default {
         }
     },
     mounted() {
-        setTimeout(() => {
-            let greeting = "Hey there! You can send me a message here and I'll respond as soon as I can. Don't forget to mention your name and email! 🙂";
-            this.messages.push({
-                text: greeting,
-                outgoing: false
-            });
-            this.lastMessageTime = this.getTime();
-            this.greetingSent = true;
-            this.$refs['receive_sound'].play();
-            this.lastMessage = greeting;
-        }, 9000);
         // submit form before closing the page
         window.addEventListener('beforeunload', this.sendForm);
     },
@@ -86,6 +75,19 @@ export default {
         },
         getTime() {
             return moment().format('LT');
+        },
+        greet() {
+            setTimeout(() => {
+                let greeting = "Hey there! You can send me a message here and I'll respond as soon as I can. Don't forget to mention your name and email! 🙂";
+                this.messages.push({
+                    text: greeting,
+                    outgoing: false
+                });
+                this.lastMessageTime = this.getTime();
+                this.greetingSent = true;
+                this.$refs['receive_sound'].play();
+                this.lastMessage = greeting;
+            }, 3000);
         },
         send(e) {
             e.preventDefault();
@@ -125,6 +127,13 @@ export default {
     computed: {
         isOpen() {
             return this.$store.state.windows.imessage.isOpen;
+        }
+    },
+    watch: {
+        isOpen(val) {
+            if (val && !this.greetingSent) {
+                this.greet();
+            }
         }
     }
 }

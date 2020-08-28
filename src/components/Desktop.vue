@@ -101,10 +101,10 @@ export default {
       let newBackground = this.backgrounds[rndIndex];
       let newImg = new Image();
       newImg.onload = () => {
-        this.currentBackground = `${this.publicPath}${newBackground}.jpg`;
+        this.currentBackground = `${this.publicPath}${newBackground}.webp`;
         setTimeout(() => {this.desktopImageLoaded = true;}, 6000);
       }
-      newImg.src = `${this.publicPath}${newBackground}.jpg`;
+      newImg.src = `${this.publicPath}${newBackground}.webp`;
     },
     deactivateFolders(e) {
       let target = e.target.id === 'desktop' ? 'desktop' : e.target.parentNode.getAttribute('name');
