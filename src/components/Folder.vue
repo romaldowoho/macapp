@@ -1,7 +1,7 @@
 <template>
   <div id="folder" @click="activate" @dblclick="openFolder" :style="{left, top}">
     <div class='outline' :class="{activeFolder: isActive}"></div>
-    <img id="folder-icon"  src="../assets/folder.png" width="64px" height="64px" />
+    <img id="folder-icon"  src="../assets/folder.webp" width="64px" height="64px" alt="folder image" />
     <div class="name" :class="{activeFolderName: isActive}">{{folderName}}</div>
   </div>
 </template>

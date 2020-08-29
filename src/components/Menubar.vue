@@ -1,6 +1,6 @@
 <template>
   <div id="menubar">
-      <img src="../assets/apple.png" height="18" width="18" alt="">
+      <img src="../assets/apple.png" height="18" width="18" alt="apple logo">
   </div>
 </template>
 

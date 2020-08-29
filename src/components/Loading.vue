@@ -1,7 +1,7 @@
 <template>
   <transition name="loaded">
     <div id="main" v-if="!desktopImageLoaded">
-    <img src="../assets/apple.png" alt="">
+    <img src="../assets/apple.webp" alt="apple">
     <div id="load-parent">
       <div id="loading"></div>
     </div>

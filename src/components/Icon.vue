@@ -1,7 +1,8 @@
 <template>
   <div>
       <img ref="img" 
-           src="../assets/imessage.png" 
+           src="../assets/imessage.webp"
+           alt="imessage icon"
            height="48" 
            width="48" 
            :class="{overlay: active, animate: isOpen}" 
