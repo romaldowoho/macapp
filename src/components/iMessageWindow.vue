@@ -10,7 +10,7 @@
           <div id="left-bottom">
               <div id="recipient">
                   <div id="photo">
-                      <img src="../assets/me.webp" alt="">
+                      <img src="../assets/me.webp" alt="me">
                   </div>
                   <div id="msg-info">
                       <div id="name-time">
@@ -28,7 +28,7 @@
           </div>
           <div ref="all_messages" id="all-messages">
               <div id="msg-time" v-if="greetingSent">
-                  Today, {{ getTime()}}
+                  Today, {{ lastMessageTime}}
               </div>
               <Message v-for="msg in messages" :message="msg.text" :outgoing="msg.outgoing" :key="msg.key"/> 
               <audio ref="send_sound" src="../assets/imessage_send.mp3"></audio>
