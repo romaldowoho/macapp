@@ -35,8 +35,13 @@ export default new Vuex.Store({
             },
             projects: {
                 isOpen: false,
-                left: 0,
-                top: 0
+                left: 400,
+                top: 300,
+                prevLeft: 300, 
+                prevTop: 200, 
+                height: 400,
+                width: 700,
+                transition: false
             }
         },
         imessage: {

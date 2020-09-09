@@ -3,12 +3,13 @@
     <Menubar />
     <Loading :desktopImageLoaded="desktopImageLoaded"/>
     <WindowFolder folderName="games" name="games" />
+    <WindowFolder folderName="projects" name="projects" />
     <Folder name="games" folderName="games"/>
     <Folder name="projects" folderName="projects"/>
     <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
     <Item icon="pdf.webp" link="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4734a069-d62a-437d-9fa2-d235395b0d8f/Resume.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20200829%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200908T054936Z&X-Amz-Expires=604799&X-Amz-Signature=3387c7103157f23514fc628631d63d19bfe1aa4bf28544f51c9b70c76ea8e50a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Resume.pdf%22" />
     <Alert />
-    <iMessage />
+    <IMessage />
     <Dock id="dock" />
   </div>
 </template>
@@ -22,7 +23,7 @@ import Item from './Item.vue'
 import Draggable from 'draggable'
 import Alert from './Alert'
 import Menubar from './Menubar'
-import iMessage from './iMessageWindow'
+import IMessage from './iMessageWindow'
 import Dock from './Dock'
 
 
@@ -37,7 +38,7 @@ export default {
         Item,
         Alert,
         Menubar,
-        iMessage,
+        IMessage,
         Dock
     },
     data() {
@@ -67,7 +68,7 @@ export default {
     const windows = document.querySelectorAll("#window");
     windows.forEach(window => {
       new Draggable(window, {onDragEnd: this.updateItemLocation, 
-                             handle: document.querySelector('#top-bar'),
+                             handle: window.querySelector('#top-bar'),
                              limit: {y: [20, this.windowHeight], x: null}});
     });
     const imessage = document.querySelector('#imessage');
