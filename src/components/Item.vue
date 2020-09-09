@@ -1,6 +1,7 @@
 <template>
-  <div id="icon" @dblclick="open">
-      <img id="img" :src="require(`@/assets/${icon}`)" width="49" height="49" alt="github">
+  <div id="item" @dblclick="open">
+      <img id="img" :src="require(`@/assets/${icon}`)" width="49" height="49" alt="icon">
+      <div id="name">{{name}}</div>
   </div>
 </template>
 
@@ -9,7 +10,8 @@ export default {
     name: "Item",
     props: {
         icon: String,
-        link: String
+        link: String,
+        name: String
     },
     methods: {
         open() {
@@ -20,17 +22,26 @@ export default {
 </script>
 
 <style scoped>
-    #icon {
+    #item {
         height: 47px;
         width: 47px;
-        background-color: whitesmoke;
-        border-radius: 50%;
         position: absolute;
+        left: 96%;
+        top: 30%;
     }
 
     #img {
         position: relative;
         top: -1px;
         left: -1px;
+    }
+
+    #name {
+      position: relative;
+      left: -5px;
+      text-align: center;
+      font-weight: bold;
+      color: white;
+      cursor: default;
     }
 </style>
