@@ -1,7 +1,7 @@
 <template>
   <div id="menubar">
       <div id="tabs">
-          <img class="tab" src="../assets/apple.png" height="18" width="18" alt="apple logo">
+          <img class="tab" src="../assets/apple.png" height="16" width="16" alt="apple logo">
           <div class="tab">Finder</div>
           <div class="tab">File</div>
       </div>
@@ -27,6 +27,7 @@ export default {
     #menubar {
         height: 20px;
         width: 100%;
+        font-size: 14px;
         display: flex;
         justify-content: space-between;
         background-color: rgb(37, 35, 35);
@@ -38,9 +39,12 @@ export default {
         display: flex;
         align-items: center;
     }
-
     .tab {
         margin-left: 20px;
+    }
+
+    #right-btns {
+        padding-right: 15px;
     }
 
 </style>
