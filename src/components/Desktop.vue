@@ -6,7 +6,7 @@
     <Folder name="games" folderName="games"/>
     <Folder name="projects" folderName="projects"/>
     <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
-    <!-- <Item icon="github.png" /> -->
+    <Item icon="pdf.webp" link="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4734a069-d62a-437d-9fa2-d235395b0d8f/Resume.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20200829%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200908T054936Z&X-Amz-Expires=604799&X-Amz-Signature=3387c7103157f23514fc628631d63d19bfe1aa4bf28544f51c9b70c76ea8e50a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Resume.pdf%22" />
     <Alert />
     <iMessage />
     <Dock id="dock" />
@@ -18,7 +18,7 @@ import Folder from './Folder.vue'
 import Selection from './Selection.vue'
 import WindowFolder from './WindowFolder.vue'
 import Loading from './Loading.vue'
-// import Item from './Item.vue'
+import Item from './Item.vue'
 import Draggable from 'draggable'
 import Alert from './Alert'
 import Menubar from './Menubar'
@@ -34,7 +34,7 @@ export default {
         Selection,
         WindowFolder,
         Loading,
-        // Item,
+        Item,
         Alert,
         Menubar,
         iMessage,

@@ -30,12 +30,14 @@ export default {
     },
     methods: {
         open() {
-            this.target.isOpen = true;
+            // this.target.isOpen = true;
+            this.$store.state.windows.imessage.isOpen = true;
         }
     },
     computed: {
         isOpen() {
-            return this.target.isOpen
+            // return this.target.isOpen;
+            return this.$store.state.windows.imessage.isOpen;
         }
     }
 }
@@ -48,9 +50,13 @@ export default {
 
     .animate {
         animation: updown 1s ease-out;
+        will-change: transform;
     }
 
     @keyframes updown {
+        0% {
+            transform: translateY(0px);
+        }
         50% {
             transform: translateY(-15px);
         }

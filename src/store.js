@@ -24,7 +24,7 @@ export default new Vuex.Store({
       windows: {
         folders: {
             games: {
-                isOpen: true,
+                isOpen: false,
                 left: 300,
                 top: 200,
                 prevLeft: 300, 

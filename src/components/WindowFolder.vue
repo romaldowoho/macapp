@@ -1,23 +1,7 @@
 <template>
     <div id="window" :style="{left, top, height, width}" :class="{transition}">
       <div id="top-bar">
-          <div v-if="isOpen" id="control-buttons" @mouseover="buttonsActive = true" @mouseleave="buttonsActive = false">
-              <div 
-                class="control-btn btn-close" 
-                :class="{'btn-close-pressed': btnClosePressed}" 
-                @mousedown="btnClosePressed = true" 
-                @mouseleave="btnClosePressed = false"
-                @click="closeWindow"
-              >
-                  <img v-show="buttonsActive" id="btn-cross" src="../assets/cross.svg" alt="">
-              </div>
-              <div class="control-btn btn-minimize" :class="{'btn-minimize-pressed': btnMinimizePressed}" @mousedown="btnMinimizePressed = true" @mouseleave="btnMinimizePressed = false">
-                  <div v-show="buttonsActive" id="btn-line"></div>
-              </div>
-              <div class="control-btn btn-expand" :class="{'btn-expand-pressed': btnExpandPressed}" @mousedown="btnExpandPressed = true" @mouseleave="btnExpandPressed = false">
-                  <img v-show="buttonsActive" id="btn-expand" src="../assets/expand.svg" alt="">
-              </div>
-          </div>
+          <ControlButtons :target="folder()" />
           <div id="title" v-if="isOpen">
               <img id="title-img" src="../assets/folder.png" alt="">
               <span id="title-name">{{folderName}}</span>
@@ -34,6 +18,7 @@
 
 <script>
 // import Selection from "./Selection";
+import ControlButtons from './ControlButtons'
 
 export default { 
     name: "WindowFolder",
@@ -41,24 +26,23 @@ export default {
         folderName: String
     },
     components: {
+        ControlButtons
         // Selection
     },
     data() {
         return {
-            buttonsActive: false,
-            btnClosePressed: false,
-            btnMinimizePressed: false,
-            btnExpandPressed: false
         }
     },
     mounted() {
         this.closeWindow();
     },
     methods: {
+        folder() {
+            return this.$store.state.windows.folders[this.folderName]; 
+        },
         closeWindow() {
             let window = this.$store.state.windows.folders[this.folderName];
             window.transition = true; 
-            window.isOpen = false;
             window.prevLeft = window.left;
             window.prevTop = window.top;
             window.height = 0;
@@ -66,34 +50,34 @@ export default {
             window.left = this.folderLeft + 30;
             window.top = this.folderTop + 30;
             setTimeout(() => {window.transition = false;}, 50);
-            this.resetData();
             // this.$el.style.zIndex = 0;
-        },
-        resetData() {
-            this.buttonsActive = false;
-            this.btnClosePressed = false;
-            this.btnMinimizePressed = false;
-            this.btnExpandPressed = false;
+        }
+    },
+    watch: {
+        isOpen(val) {
+            if (!val) {
+                this.closeWindow();
+            }
         }
     },
     computed: {
         isOpen() {
-            return this.$store.state.windows.folders[this.folderName].isOpen;
+            return this.folder().isOpen;
         },
         transition() {
-            return this.$store.state.windows.folders[this.folderName].transition;
+            return this.folder().transition;
         },
         left() {
-            return this.$store.state.windows.folders[this.folderName].left + 'px';
+            return this.folder().left + 'px';
         },
         top() {
-            return this.$store.state.windows.folders[this.folderName].top + 'px';
+            return this.folder().top + 'px';
         },
         height() {
-            return this.$store.state.windows.folders[this.folderName].height + 'px';
+            return this.folder().height + 'px';
         },
         width() {
-            return this.$store.state.windows.folders[this.folderName].width + 'px';
+            return this.folder().width + 'px';
         },
         folderLeft() {
             return this.$store.state.folders[this.folderName].left;

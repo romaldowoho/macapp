@@ -9,11 +9,11 @@ export default {
     name: "Item",
     props: {
         icon: String,
-        fileName: String
+        link: String
     },
     methods: {
         open() {
-            window.open("https://github.com/romaldowoho/macapp", "_blank");
+            window.open(`${this.link}`, "_blank");
         }
     }
 }

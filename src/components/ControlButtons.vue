@@ -1,5 +1,5 @@
 <template>
-  <div id="buttons" @mouseover="buttonsActive = true" @mouseleave="buttonsActive = false">
+  <div id="buttons" v-show="target.isOpen" @mouseover="buttonsActive = true" @mouseleave="buttonsActive = false">
       <div 
         class="btn btn-close" 
         :class="{'btn-close-active': buttonsActive, 'btn-close-pressed': btnClosePressed}"

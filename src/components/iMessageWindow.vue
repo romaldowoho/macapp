@@ -28,7 +28,7 @@
           </div>
           <div ref="all_messages" id="all-messages">
               <div id="msg-time" v-if="greetingSent">
-                  Today, {{ lastMessageTime}}
+                  Today, {{ lastMessageTime }}
               </div>
               <Message v-for="msg in messages" :message="msg.text" :outgoing="msg.outgoing" :key="msg.key"/> 
               <audio ref="send_sound" src="../assets/imessage_send.mp3"></audio>
@@ -87,7 +87,7 @@ export default {
                 this.greetingSent = true;
                 this.$refs['receive_sound'].play();
                 this.lastMessage = greeting;
-            }, 3000);
+            }, 5000);
         },
         send(e) {
             e.preventDefault();
