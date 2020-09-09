@@ -116,7 +116,6 @@ export default {
         display: inline-block;
         position: relative;
         left: 50%;
-        top: -10px;
     }
 
     #title-img {
