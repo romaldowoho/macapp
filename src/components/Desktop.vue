@@ -7,8 +7,9 @@
     <Folder name="games" folderName="games"/>
     <Folder name="projects" folderName="projects"/>
     <Selection :startX="selectionStartX" :startY="selectionStartY" :endX="selectionEndX" :endY="selectionEndY" />
-    <Item icon="pdf.webp" name="resume" link="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4734a069-d62a-437d-9fa2-d235395b0d8f/Resume.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20200909%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200909T224738Z&X-Amz-Expires=86400&X-Amz-Signature=8c7268850b6f1aa6d455c88dacc0a84c8903c3adb912054cb3b6a400bf7d4295&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Resume.pdf%22" />
-    <Alert />
+    <Item icon="pdf.webp" name="resume" link="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4734a069-d62a-437d-9fa2-d235395b0d8f/Resume.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20200916%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200916T055728Z&X-Amz-Expires=86400&X-Amz-Signature=60fbdee71dad04992ccaa036e9684299bf19e985caf6c78fdc61b2e1458e7b7d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Resume.pdf%22" />
+    <Alert title="Try fullscreen mode" content="Consider going fullscreen for better experience" :delay="10000" icon="expand.svg"/>
+    <AutoAlert title="β" content="The website is a work in progress" :delay="10000" icon="coder.png"/>
     <IMessage />
     <Dock id="dock" />
   </div>
@@ -22,6 +23,7 @@ import Loading from './Loading.vue'
 import Item from './Item.vue'
 import Draggable from 'draggable'
 import Alert from './Alert'
+import AutoAlert from './AutoAlert'
 import Menubar from './Menubar'
 import IMessage from './iMessageWindow'
 import Dock from './Dock'
@@ -37,6 +39,7 @@ export default {
         Loading,
         Item,
         Alert,
+        AutoAlert,
         Menubar,
         IMessage,
         Dock

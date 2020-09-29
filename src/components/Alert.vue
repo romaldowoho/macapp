@@ -1,12 +1,12 @@
 <template>
-  <div id="alert" v-if="isOpen">
+  <div id="alert" v-if="isOpen" :class="{slidein: inView}">
       <div id="left">
-          <div id="expand-icon">
-              <img src="../assets/expand.svg" alt="" />
+          <div id="icon">
+              <img :src="require(`../assets/${icon}`)" alt="icon" />
           </div>
           <div id="content">
-              <div style="font-weight: bold; display: inline;">Try fullscreen mode</div><br>
-              <div style="font-size: 12px; display: inline;">Consider going fullscreen for better experience</div>
+              <div style="font-weight: bold; display: inline;">{{ title }}</div><br>
+              <div style="font-size: 12px; display: inline;">{{ content }}</div>
           </div>
       </div>
       <div id="right">
@@ -23,13 +23,25 @@
 <script>
 export default {
     name: "Alert",
+    props: {
+        title: String,
+        content: String,
+        delay: Number,
+        icon: String
+    },
     data() {
         return {
             closeActive: false,
             fsActive: false,
             isOpen: true,
-            isFullscreen: false
+            isFullscreen: false,
+            inView: false
         }
+    },
+    beforeMount() {
+        setTimeout(() => {
+           this.inView = true;
+        }, this.delay);
     },
     methods: {
         goFullScreen(){
@@ -90,8 +102,11 @@ export default {
         background: linear-gradient(rgb(203, 219, 218), rgb(236, 236, 236));
         color: rgb(40, 40, 40);
         box-shadow: 10px 15px 50px 10px rgba(0, 0, 0, 0.473);
+        
+    }
+
+    .slidein {
         animation: slide-left 0.5s forwards ease-out;
-        animation-delay: 10s;
     }
 
     #left {
@@ -102,7 +117,7 @@ export default {
         align-items: center;
     }
 
-    #expand-icon {
+    #icon {
         height: 30px;
         width: 30px;
         min-width: 30px;
@@ -114,8 +129,8 @@ export default {
         left: 15px;
         display: flex;
         justify-content: center;
-        background-color: rgb(50, 215, 75);
-        border: 1px solid rgba(128, 128, 128, 0.2);
+        /* background-color: rgb(50, 215, 75);
+        border: 1px solid rgba(128, 128, 128, 0.2); */
     }
 
     #content {

@@ -13,7 +13,7 @@
               <!-- <Selection /> -->
           </div>
       </div>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -48,7 +48,7 @@ export default {
             window.height = 0;
             window.width = 0;
             window.left = this.folderLeft + 30;
-            window.top = this.folderTop + 30;
+            window.top = this.folderTop;
             setTimeout(() => {window.transition = false;}, 50);
             this.$el.style.zIndex = 0;
         }
